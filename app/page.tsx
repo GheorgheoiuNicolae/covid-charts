@@ -1,9 +1,10 @@
 "use client";
 import { DownloadOutlined } from "@ant-design/icons";
-import { Bar } from "@antv/g2plot";
 import { Button, Layout, Space } from "antd";
-import React, { RefObject, useEffect, useRef } from "react";
-
+import { NextPage } from "next";
+import React from "react";
+import BarWidget from "./components/barWidget/barWidget";
+import LineWidget from "./components/lineWidget/lineWidget";
 const { Header, Footer, Content } = Layout;
 
 const wrapperStyle: React.CSSProperties = {
@@ -37,40 +38,12 @@ const pageHeaderStyle: React.CSSProperties = {
   justifyContent: "space-between",
 };
 
-const data = [
-  { genre: "Sports", sold: 275 },
-  { genre: "Strategy", sold: 115 },
-  { genre: "Action", sold: 120 },
-  { genre: "Shooter", sold: 350 },
-  { genre: "Other", sold: 150 },
-];
-export default function Home() {
-  const containerRef: RefObject<any> = useRef(null);
-  let stackedBarPlot: any;
+const chartsWrapperStyles: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "row",
+};
 
-  useEffect(() => {
-    stackedBarPlot = new Bar(containerRef.current, {
-      data: data.reverse(),
-      isStack: false,
-      xField: "sold",
-      yField: "genre",
-      // seriesField: "type",
-      autoFit: false,
-      label: {
-        position: "left", // 'left', 'middle', 'right'
-        layout: [
-          { type: "interval-adjust-position" },
-          { type: "interval-hide-overlap" },
-          { type: "adjust-color" },
-        ],
-      },
-    });
-  }, []);
-
-  useEffect(() => {
-    stackedBarPlot.render();
-  }, []);
-
+const Home: NextPage = ({ apiData }: any) => {
   return (
     <Space direction="vertical" size={[0, 48]} style={wrapperStyle}>
       <Layout>
@@ -82,7 +55,7 @@ export default function Home() {
         <Content style={contentStyle}>
           <div className="container">
             <section className="page-heading container" style={pageHeaderStyle}>
-              <h3 style={{ margin: 0 }}>Covid Statistics app</h3>
+              <h3 style={{ margin: 0 }}>Page title</h3>
               <div className="buttons">
                 <Button
                   type="primary"
@@ -110,8 +83,9 @@ export default function Home() {
                 </Button>
               </div>
             </section>
-            <section>
-              <div style={{ maxWidth: "1200px" }} ref={containerRef}></div>
+            <section className="container" style={chartsWrapperStyles}>
+              <LineWidget />
+              <BarWidget />
             </section>
           </div>
         </Content>
@@ -119,4 +93,6 @@ export default function Home() {
       </Layout>
     </Space>
   );
-}
+};
+
+export default Home;
