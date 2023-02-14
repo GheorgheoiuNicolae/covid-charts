@@ -43,7 +43,7 @@ const chartsWrapperStyles: React.CSSProperties = {
   flexDirection: "row",
 };
 
-const Home: NextPage = ({ apiData }: any) => {
+const Home = () => {
   return (
     <Space direction="vertical" size={[0, 48]} style={wrapperStyle}>
       <Layout>
